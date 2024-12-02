@@ -1,0 +1,25 @@
+### Get products
+GET http://localhost:3000/api/v1/products
+
+### Create product
+POST http://localhost:3000/api/v1/products
+Content-Type: application/json
+
+{
+  "name":"New product",
+  "price": 300,
+  "image": "https://picsum.photos/seed/EtqtXY/2329/2213?blur=8"
+}
+
+### Partial update product
+PATCH http://localhost:3000/api/v1/products/1212
+Content-Type: application/json
+
+{
+  "name":"Updated product",
+  "price": 400,
+  "image": "https://picsum.photos/seed/zK0q45/3990/2595?grayscale&blur=6"
+}
+
+### Delete product
+DELETE http://localhost:3000/api/v1/products/1212

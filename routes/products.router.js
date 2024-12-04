@@ -1,76 +1,66 @@
 const express = require('express')
-const { faker } = require('@faker-js/faker')
+const ProductsService = require('../services/products.service')
 
 const router = express.Router()
+const service = new ProductsService()
 
-router.get('/', (req, res) => {
-  const products = []
+router.get('/', async (req, res) => {
+  const products = await service.find()
 
-  const { size } = req.query
-  const limit = size || 5
-
-  for (let i = 0; i < limit; i++) {
-    products.push({
-      name: faker.commerce.productName(),
-      price: parseInt(faker.commerce.price()),
-      image: faker.image.urlPicsumPhotos()
-    })
-  }
   res.json(products)
 })
 
-router.get('/filter', (req, res) => {
+router.get('/filter', async (req, res) => {
   res.send('Test')
 })
 
-router.get('/:id', (req, res) => {
+router.get('/:id', async (req, res) => {
   const { id } = req.params
 
-  if (id === '999') {
-    res.status(404).json({
-      id,
-      message: 'Not found'
-    })
-  } else {
-    res.status(200).json({
-      id,
-      name: 'Product2',
-      price: 200
-    })
-  }
+  const product = await service.findOne(id)
+
+  if (!product) return
+
+  res.status(200).json(product)
 })
 
-router.get('/test', (req, res) => {
-  res.send('No funciona')
-})
-
-router.post('/', (req, res) => {
+router.post('/', async (req, res) => {
   const body = req.body
+
+  const newProduct = await service.create(body)
 
   res.status(201).json({
     message: 'created',
-    data: body
+    data: newProduct
   })
 })
 
-router.patch('/:id', (req, res) => {
-  const { id } = req.params
-  const body = req.body
+router.patch('/:id', async (req, res) => {
+  try {
+    const { id } = req.params
+    const body = req.body
 
-  res.json({
-    message: 'Product updated',
-    data: body,
-    id
-  })
+    const newProduct = await service.update(id, body)
+
+    res.json({
+      message: 'Product updated',
+      data: newProduct
+    })
+  } catch (error) {
+    res.status(404).json({ error: error.message })
+  }
 })
 
-router.delete('/:id', (req, res) => {
-  const { id } = req.params
+router.delete('/:id', async (req, res) => {
+  try {
+    const { id } = req.params
 
-  res.json({
-    message: 'Product deleted',
-    id
-  })
+    const result = await service.delete(id)
+
+    res.status(200).json(result)
+  } catch (error) {
+    res.status(404).json({ message: error.message })
+  }
 })
 
 module.exports = router

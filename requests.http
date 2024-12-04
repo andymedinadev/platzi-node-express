@@ -1,6 +1,9 @@
 ### Get products
 GET http://localhost:3000/api/v1/products
 
+### Get product by id
+GET http://localhost:3000/api/v1/products/b0b6b90f-2c71-4bdd-b3a3-8f1f14ff0d11
+
 ### Create product
 POST http://localhost:3000/api/v1/products
 Content-Type: application/json
@@ -12,14 +15,13 @@ Content-Type: application/json
 }
 
 ### Partial update product
-PATCH http://localhost:3000/api/v1/products/1212
+PATCH http://localhost:3000/api/v1/products/b0b6b90f-2c71-4bdd-b3a3-8f1f14ff0d18
 Content-Type: application/json
 
 {
-  "name":"Updated product",
-  "price": 400,
-  "image": "https://picsum.photos/seed/zK0q45/3990/2595?grayscale&blur=6"
+  "name": "Updated product",
+  "price": 500
 }
 
 ### Delete product
-DELETE http://localhost:3000/api/v1/products/1212
+DELETE http://localhost:3000/api/v1/products/8f5628b4-3e64-48d8-8853-8e2f8d3ffeee

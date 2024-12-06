@@ -2,7 +2,7 @@
 GET http://localhost:3000/api/v1/products
 
 ### Get product by id
-GET http://localhost:3000/api/v1/products/b0b6b90f-2c71-4bdd-b3a3-8f1f14ff0d11
+GET http://localhost:3000/api/v1/products/ebc08ce8-0598-4e83-a3b6-25cba7c15da8
 
 ### Create product
 POST http://localhost:3000/api/v1/products

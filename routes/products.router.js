@@ -14,14 +14,16 @@ router.get('/filter', async (req, res) => {
   res.send('Test')
 })
 
-router.get('/:id', async (req, res) => {
-  const { id } = req.params
+router.get('/:id', async (req, res, next) => {
+  try {
+    const { id } = req.params
 
-  const product = await service.findOne(id)
+    const product = await service.findOne(id)
 
-  if (!product) return
-
-  res.status(200).json(product)
+    res.status(200).json(product)
+  } catch (error) {
+    next(error)
+  }
 })
 
 router.post('/', async (req, res) => {
@@ -35,7 +37,7 @@ router.post('/', async (req, res) => {
   })
 })
 
-router.patch('/:id', async (req, res) => {
+router.patch('/:id', async (req, res, next) => {
   try {
     const { id } = req.params
     const body = req.body
@@ -47,7 +49,7 @@ router.patch('/:id', async (req, res) => {
       data: newProduct
     })
   } catch (error) {
-    res.status(404).json({ error: error.message })
+    next(error)
   }
 })
 
